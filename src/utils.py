@@ -2,23 +2,56 @@ import os
 import sys
 import pandas as pd
 from src.exception import CustomException
+import dill
+from sklearn.metrics import r2_score
+from sklearn.preprocessing import OneHotEncoder,LabelEncoder
 
 
-def tranform_data(df):
-    try: 
-        df = df.drop(['Unnamed: 0','flight'],axis=1)
-        df['class'] = df['class'].apply(lambda x: 1 if x == 'Business' else 0 )
-        df['stops'] = pd.factorize(df['stops'])[0]
-        df = df.join(pd.get_dummies(df['airline'],prefix='airline',dtype=int)).drop('airline',axis=1)
-        df = df.join(pd.get_dummies(df['source_city'],prefix='source',dtype=int)).drop('source_city',axis=1)
-        df = df.join(pd.get_dummies(df['destination_city'],prefix='dest',dtype=int)).drop('destination_city',axis=1)
-        df = df.join(pd.get_dummies(df['departure_time'],prefix='departure',dtype=int)).drop('departure_time',axis=1)
-        df = df.join(pd.get_dummies(df['arrival_time'],prefix='arrival',dtype=int)).drop('arrival_time',axis=1)
+def evaluate_models(X_train,y_train,X_test,y_test,models):
+    try:
+        report = {}
 
-        return df
-    
+        for i in range(len(list(models))):
+            model = list(models.values())[i]
+
+            model.fit(X_train,y_train)
+
+            y_train_pred = model.predict(X_train)
+
+            y_test_pred = model.predict(X_test)
+
+            train_model_score = r2_score(y_train,y_train_pred)
+
+            test_model_score = r2_score(y_test,y_test_pred)
+
+            report[list(models.keys())[i]] = test_model_score
+
+            return report
+
+
     except Exception as e:
         raise CustomException(e,sys)
 
 
     
+
+def save_object(file_path,obj):
+    try:
+        dir_path = os.path.dirname(file_path)
+
+        os.makedirs(dir_path,exist_ok=True)
+
+        with open(file_path,'wb') as file_obj:
+            dill.dump(obj,file_obj)
+
+    except Exception as e:
+        raise CustomException(e,sys)
+    
+
+def load_object(file_path):
+    try :
+        with open(file_path,'rb') as file_obj:
+            return dill.load(file_obj)
+
+    except Exception as e:
+        raise CustomException(e,sys)

@@ -12,6 +12,10 @@ from src.components.data_transformation import DataTransformationConfig
 from src.components.data_transformation import DataTransformation
 
 
+from src.components.model_trainer import ModelTrainerConfig
+from src.components.model_trainer import ModelTrainer
+
+
 
 
 @dataclass
@@ -30,6 +34,8 @@ class DataIngestion:
         try: 
             df = pd.read_csv('data/Clean_Dataset.csv')
 
+            df = df.drop(['Unnamed: 0','flight'],axis=1)
+            
             logging.info("Read the dataset as DataFrame")
 
             os.makedirs(os.path.dirname(self.ingestion_config.raw_data_path),exist_ok=True)
@@ -60,4 +66,7 @@ if __name__ == "__main__":
     obj = DataIngestion()
     train_data, test_data = obj.initiate_data_ingestion()
     data_transformation = DataTransformation()
-    data_transformation.initiate_data_transformation(train_data,test_data)
+    transformed_train_data, transformed_test_data = data_transformation.initiate_data_transformation(train_data,test_data)
+    
+    modeltrainer = ModelTrainer()
+    print(modeltrainer.initiate_model_trainer(transformed_train_data,transformed_test_data))
