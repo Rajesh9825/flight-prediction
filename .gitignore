@@ -169,3 +169,10 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
+# folders and files
+flaskapi.py
+artifacts/model.pkl
+models
+notebooks
