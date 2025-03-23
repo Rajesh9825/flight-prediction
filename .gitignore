@@ -176,7 +176,11 @@ flaskapi.py
 artifacts/model.pkl
 models
 notebooks
-flight-prediction
+artifacts/data.csv
+artifacts/test.csv
+artifacts/train.csv
+data
+
 
 
 
