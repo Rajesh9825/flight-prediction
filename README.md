@@ -13,7 +13,7 @@ Flight ticket prices fluctuate based on various factors such as airline, time of
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 Flight_Price_Prediction/
@@ -49,7 +49,7 @@ Flight_Price_Prediction/
 ---
 
 
-## 🔍 Project Workflow
+##  Project Workflow
 
 ### 1️. Data Collection & Loading
 
@@ -90,16 +90,18 @@ Flight_Price_Prediction/
 #### Challenge: Large Model File Size
 
 **Problem:**
-- The trained model file exceeded GitHub's file size limit.
+    - The trained model file exceeded GitHub's file size limit.
+
 **Solution:**
-- Used **Hugging Face Model Hub** to store the model and loaded it dynamically in the web app using API calls.
+    - Used **Hugging Face Model Hub** to store the model and loaded it dynamically in the web app using API calls.
 
 #### Challenge: Deployment on Render
 
 **Problem:**
-- Render had file upload restrictions, preventing direct deployment.
+    - Render had file upload restrictions, preventing direct deployment.
+
 **Solution:**
-- Deployed the entire web application on **Hugging Face Spaces** for seamless access and execution.
+    - Deployed the entire web application on **Hugging Face Spaces** for seamless access and execution.
 
 ### 7️. Web Application Development & Deployment
 
@@ -108,5 +110,5 @@ Flight_Price_Prediction/
 - Integrated model inference API to allow real-time predictions.
 - Successfully deployed the application on Hugging Face Spaces.
 
-Live Demo : 
+Live Demo : https://huggingface.co/spaces/CV-Raju/flight-price-prediction
 ---
